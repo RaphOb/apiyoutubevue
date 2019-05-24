@@ -1,6 +1,6 @@
 <<<<<<< Updated upstream
 
-\.idea/
+.idea/
 =======
 # dependencies
 node_modules
@@ -13,4 +13,4 @@ npm-debug.log
 
 # Nuxt generate
 dist
->>>>>>> Stashed changes
+
