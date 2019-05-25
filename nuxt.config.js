@@ -10,7 +10,8 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700,400italic|Material+Icons' }
     ]
   },
   /**
@@ -25,6 +26,14 @@ module.exports = {
     baseURL: 'http://192.168.197.131:8080/'
   },
 
+  css: [
+    { src: 'vue-material/dist/vue-material.min.css', lang: 'css' }
+    // { src: '~/assets/theme.scss', lang: 'scss' } // include vue-material theme engine
+  ],
+  plugins: [
+    { src: '~/plugins/vue-material' }
+  ],
+
   /*
   ** Customize the progress bar color
   */
@@ -33,18 +42,19 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor: ["vue-material"],
     /*
     ** Run ESLint on save
     */
     extend (config, { isDev, isClient }) {
-      if (isDev && isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
+      // if (isDev && isClient) {
+      //   config.module.rules.push({
+      //     enforce: 'pre',
+      //     test: /\.(js|vue)$/,
+      //     loader: 'eslint-loader',
+      //     exclude: /(node_modules)/
+      //   })
+      // }
     }
   }
 }
