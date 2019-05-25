@@ -27,8 +27,8 @@ module.exports = {
   },
 
   css: [
-    { src: 'vue-material/dist/vue-material.min.css', lang: 'css' }
-    // { src: '~/assets/theme.scss', lang: 'scss' } // include vue-material theme engine
+    { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
+    { src: '~/assets/theme.scss', lang: 'scss' } // include vue-material theme engine
   ],
   plugins: [
     { src: '~/plugins/vue-material' }

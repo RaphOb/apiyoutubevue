@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Welcome!</h1>
-    <NLink to="/about">
+    <NLink to="/users">
       About Page
     </NLink>
   </div>

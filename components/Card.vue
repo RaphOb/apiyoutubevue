@@ -2,11 +2,11 @@
     <div>
         <md-card>
             <md-card-header>
-                <div class="md-title">Card without hover effect</div>
+                <div class="md-title">{{id}} : {{username}}</div>
             </md-card-header>
 
             <md-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.
+                {{pseudo}} , {{created_at}}
             </md-card-content>
 
             <md-card-actions>
