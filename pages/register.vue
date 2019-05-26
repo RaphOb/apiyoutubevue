@@ -72,6 +72,7 @@
 
 <script>
   import Notification from '~/components/Notification'
+  import axios from 'axios'
 
   export default {
     components: {
@@ -91,13 +92,22 @@
     methods: {
       async register() {
         try {
-          await this.$axios.post('http://192.168.197.131:8080/api/user', {
+          await this.$axios.post('/api/user', {
             username: this.username,
             pseudo: this.pseudo,
             email: this.email,
             password: this.password
           })
 
+          await this.$auth.loginWith('local', {
+            data: {
+              username: this.username,
+              pseudo: this.pseudo,
+              email: this.email,
+              password: this.password
+            },
+          })
+          this.$router.push('/home')
         } catch (e) {
           this.error = e.response.data.message
         }

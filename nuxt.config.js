@@ -19,13 +19,28 @@ module.exports = {
    */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/auth'
+
   ],
 
   axios: {
     // proxyHeaders: false
     baseURL: 'http://192.168.197.131:8080/'
   },
-
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/user', method: 'post' },
+          logout: false
+        }
+      }
+    }
+  },
+  redirect: {
+    login: '/home',
+    logout: '/',
+  },
   css: [
     { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
     { src: '~/assets/theme.scss', lang: 'scss' } // include vue-material theme engine
