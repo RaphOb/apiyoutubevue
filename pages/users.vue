@@ -1,5 +1,5 @@
 /* eslint-disable */
-<template style="margin-top:2em">
+<template>
     <div>
         <div v-for="user in users.data" :key="user.id">
             <Card :id="user.id" :username="user.username" :pseudo="user.pseudo" :created_at="user.created_at"></Card>

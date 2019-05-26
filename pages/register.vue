@@ -97,7 +97,7 @@
             email: this.email,
             password: this.password
           })
-          
+
         } catch (e) {
           this.error = e.response.data.message
         }
