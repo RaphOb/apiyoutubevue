@@ -2,7 +2,7 @@
 <template>
     <div>
         <div v-for="user in users.data" :key="user.id">
-            <Card :id="user.id" :username="user.username" :pseudo="user.pseudo" :created_at="user.created_at"></Card>
+            <Card :isUser="true" :id="user.id" :username="user.username" :pseudo="user.pseudo" :created_at="user.created_at"></Card>
         </div>
     </div>
 </template>
@@ -13,16 +13,21 @@
 
   export default {
     asyncData ({ params }) {
-      return axios.get(`http://192.168.197.131:8080/api/users`)
-        .then((res) => {
-            console.log(res.data);
-          return { users: res.data }
-        })
+        return axios.get(`http://192.168.56.103:8080/api/users`)
+            .then((res) => {
+                console.log(res.data.data);
+                return {users: res.data}
+            })
     },
     components: {
         Card
+    },
+    state: {
+        users: {
+            data: []
+        }
     }
-  }
+  };
 </script>
 
 <style scoped>

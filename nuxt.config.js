@@ -25,7 +25,7 @@ module.exports = {
 
   axios: {
     // proxyHeaders: false
-    baseURL: 'http://192.168.197.131:8080/'
+    baseURL: 'http://192.168.56.103:8080/'
   },
   auth: {
     strategies: {
