@@ -13,7 +13,7 @@
 
   export default {
     asyncData ({ params }) {
-        return axios.get(`http://192.168.56.103:8080/api/users`)
+        return axios.get(`users`)
             .then((res) => {
                 console.log(res.data.data);
                 return {users: res.data}

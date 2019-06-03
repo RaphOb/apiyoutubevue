@@ -1,119 +1,120 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns">
-        <div class="column is-4 is-offset-4">
-          <h2 class="title has-text-centered">Register!</h2>
+    <div>
+        <Notification :message="error" :data="data" v-if="error"/>
+        <form method="post" class="md-layout md-alignment-center-center" style="margin-top: 20px" @submit.prevent="register">
+            <md-card class="md-layout-item md-size-50 md-small-size-100">
+                <md-card-header>
+                    <div class="md-title">Creation user</div>
+                </md-card-header>
 
-          <Notification :message="error" v-if="error"/>
+                <md-card-content>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-small-size-100">
+                            <md-field>
+                                <label for="username">Username</label>
+                                <md-input type="text" id="username" name="username" v-model="username"
+                                          required></md-input>
+                            </md-field>
+                        </div>
+                    </div>
+                </md-card-content>
 
-          <form method="post" @submit.prevent="register">
-            <div class="field">
-              <label class="label">Username</label>
-              <div class="control">
-                <input
-                  type="text"
-                  class="input"
-                  name="username"
-                  v-model="username"
-                  required
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Pseudo</label>
-              <div class="control">
-                <input
-                  type="text"
-                  class="input"
-                  name="pseudo"
-                  v-model="pseudo"
-                  required
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Email</label>
-              <div class="control">
-                <input
-                  type="email"
-                  class="input"
-                  name="email"
-                  v-model="email"
-                  required
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Password</label>
-              <div class="control">
-                <input
-                  type="password"
-                  class="input"
-                  name="password"
-                  v-model="password"
-                  required
-                >
-              </div>
-            </div>
-            <div class="control">
-              <button type="submit" class="button is-dark is-fullwidth">Register</button>
-            </div>
-          </form>
+                <md-card-content>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-small-size-100">
+                            <md-field>
+                                <label for="pseudo">Pseudo</label>
+                                <md-input type="text" id="pseudo" name="pseudo" v-model="pseudo"></md-input>
+                            </md-field>
+                        </div>
+                    </div>
+                </md-card-content>
 
-          <div class="has-text-centered" style="margin-top: 20px">
-            Already got an account? <nuxt-link to="/login">Login</nuxt-link>
-          </div>
+                <md-card-content>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-small-size-100">
+                            <md-field>
+                                <label for="email">Email</label>
+                                <md-input type="email" id="email" name="email" v-model="email" required></md-input>
+                            </md-field>
+                        </div>
+                    </div>
+                </md-card-content>
+
+                <md-card-content>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-small-size-100">
+                            <md-field>
+                                <label for="password">Password</label>
+                                <md-input type="password" id="password" name="password" v-model="password"
+                                          required></md-input>
+                            </md-field>
+                        </div>
+                    </div>
+                </md-card-content>
+
+                <md-card-actions>
+                    <md-button type="submit" class="md-primary">Register</md-button>
+                </md-card-actions>
+            </md-card>
+        </form>
+
+
+        <div class="md-layout md-alignment-center-center" style="margin-top: 20px">
+            Already got an account?
+            <nuxt-link to="/login"> Login</nuxt-link>
         </div>
-      </div>
+
     </div>
-  </section>
 </template>
 
 <script>
-  import Notification from '~/components/Notification'
-  import axios from 'axios'
+    import Notification from '~/components/Notification'
+    import axios from 'axios'
+    import Vue from 'vue';
 
-  export default {
-    components: {
-      Notification,
-    },
+    export default {
+        components: {
+            Notification,
+        },
 
-    data() {
-      return {
-        username:'',
-        pseudo:'',
-        email:'',
-        password:'',
-        error: null
-      }
-    },
+        data() {
+            return {
+                username: '',
+                pseudo: '',
+                email: '',
+                password: '',
+                error: null,
+                data: null
+            }
+        },
 
-    methods: {
-      async register() {
-        try {
-          await this.$axios.post('/api/user', {
-            username: this.username,
-            pseudo: this.pseudo,
-            email: this.email,
-            password: this.password
-          })
+        methods: {
+            async register() {
+                try {
+                    await this.$axios.post('user', {
+                        username: this.username,
+                        pseudo: this.pseudo,
+                        email: this.email,
+                        password: this.password
+                    });
 
-          await this.$auth.loginWith('local', {
-            data: {
-              username: this.username,
-              pseudo: this.pseudo,
-              email: this.email,
-              password: this.password
-            },
-          })
-          this.$router.push('/home')
-        } catch (e) {
-          this.error = e.response.data.message
+                    await this.$auth.loginWith('local', {
+                        data: {
+                            username: this.username,
+                            pseudo: this.pseudo,
+                            email: this.email,
+                            password: this.password
+                        },
+                    });
+                    router.push('/');
+                } catch (e) {
+                    this.error = e.response.data.message;
+                    this.data = e.response.data.data;
+                }
+            }
         }
-      }
     }
-  }
 </script>
 
 <style scoped>

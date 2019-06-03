@@ -25,20 +25,20 @@ module.exports = {
 
   axios: {
     // proxyHeaders: false
-    baseURL: 'http://192.168.56.103:8080/'
+    baseURL: 'http://192.168.56.103:8080/api'
   },
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/api/user', method: 'post' },
+          login: { url: 'user', method: 'post' },
           logout: false
         }
       }
     }
   },
   redirect: {
-    login: '/home',
+    login: '/',
     logout: '/',
   },
   css: [

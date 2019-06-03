@@ -18,7 +18,7 @@
 
     export default {
       asyncData ({ params }) {
-        return axios.get(`http://192.168.56.103:8080/api/videos`)
+        return axios.get(`videos`)
           .then((res) => {
             console.log(res.data);
             return { videos: res.data }

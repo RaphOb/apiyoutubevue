@@ -1,12 +1,13 @@
 <template>
-  <div class="notification is-danger">
-    {{ message }}
+  <div class="is-danger">
+      <h1>{{ message }}</h1>
+      <p>{{ data }}</p>
   </div>
 </template>
 
 <script>
   export default {
     name: 'Notification',
-    props: ['message']
+    props: ['message', 'data']
   }
 </script>
