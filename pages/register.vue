@@ -70,12 +70,10 @@
 
 <script>
     import Notification from '~/components/Notification'
-    import axios from 'axios'
-    import Vue from 'vue';
 
     export default {
         components: {
-            Notification,
+            Notification
         },
 
         data() {
@@ -92,7 +90,7 @@
         methods: {
             async register() {
                 try {
-                    await this.$axios.post('user', {
+                    await this.$axios.post('/user', {
                         username: this.username,
                         pseudo: this.pseudo,
                         email: this.email,
@@ -102,12 +100,10 @@
                     await this.$auth.loginWith('local', {
                         data: {
                             username: this.username,
-                            pseudo: this.pseudo,
-                            email: this.email,
                             password: this.password
                         },
                     });
-                    router.push('/');
+                    this.$router.push('/');
                 } catch (e) {
                     this.error = e.response.data.message;
                     this.data = e.response.data.data;

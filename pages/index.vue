@@ -13,12 +13,12 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from '~/plugins/axios'
   import Card from '~/components/Card.vue'
 
     export default {
-      asyncData ({ params }) {
-        return axios.get(`videos`)
+      asyncData () {
+        return axios.get(`/videos`)
           .then((res) => {
             console.log(res.data);
             return { videos: res.data }

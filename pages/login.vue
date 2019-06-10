@@ -1,74 +1,78 @@
 <template>
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-4 is-offset-4">
-                    <h2 class="title has-text-centered">Login!</h2>
+  <div>
+    <Notification :message="error" :data="data" v-if="error"/>
+    <form method="post" class="md-layout md-alignment-center-center" style="margin-top: 20px" @submit.prevent="login">
+      <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <md-card-header>
+          <div class="md-title">Login</div>
+        </md-card-header>
 
-                    <!--<Notification :message="error" v-if="error"/>-->
-
-                    <form method="post" @submit.prevent="login">
-                        <div class="field">
-                            <label class="label">Username</label>
-                            <div class="control">
-                                <input
-                                        type="text"
-                                        class="input"
-                                        name="username"
-                                        v-model="username"
-                                        required
-                                >
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Password</label>
-                            <div class="control">
-                                <input
-                                        type="password"
-                                        class="input"
-                                        name="password"
-                                        v-model="password"
-                                        required
-                                >
-                            </div>
-                        </div>
-                        <div class="control">
-                            <button type="submit" class="button is-dark is-fullwidth">Register</button>
-                        </div>
-                    </form>
-
-                    <div class="has-text-centered" style="margin-top: 20px">
-                       <nuxt-link>Mot de passe oublié</nuxt-link>
-                    </div>
-                </div>
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="login">Login</label>
+                <md-input type="text" id="login" name="login" v-model="username" required></md-input>
+              </md-field>
             </div>
-        </div>
-    </section>
+          </div>
+        </md-card-content>
+
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="password">Password</label>
+                <md-input type="password" id="password" name="password" v-model="password" required></md-input>
+              </md-field>
+            </div>
+          </div>
+        </md-card-content>
+        <md-card-actions>
+          <md-button type="submit" class="md-primary">Login</md-button>
+        </md-card-actions>
+      </md-card>
+    </form>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "login",
+  import Notification from '~/components/Notification'
 
-        data() {
-            return {
-                token: '',
-                error: null
-            }
-        },
+  export default {
+    name: "login",
 
-        methods: {
-            async login() {
-                try {
-                    await this.$axios.post('/api/auth', {
-                        token : this.token
-                    })
-                } catch (e) {
-                    this.error = e.response.data.message;
-                }
-            }
+    components: {
+      Notification
+    },
+
+    data() {
+        return {
+            username: '',
+            password: '',
+            error: null,
+            data: null
         }
+    },
+
+    methods: {
+      async login() {
+        // TODO locale storage le token recu et se co avec autha
+        try {
+          await this.$auth.loginWith('local', {
+            data: {
+              login: this.username,
+              password: this.password
+            }
+          });
+          this.$router.push('/')
+        } catch (e) {
+          this.error = e.response.data.message;
+          this.data = e.response.data.data;
+        }
+      }
     }
+  }
 </script>
 
 <style scoped>

@@ -27,11 +27,13 @@ module.exports = {
     // proxyHeaders: false
     baseURL: 'http://192.168.56.103:8080/api'
   },
+
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'user', method: 'post' },
+          login: { url: '/auth', method: 'post', propertyName: 'data' },
+          user: { url: '/videos', method: 'get', propertyName: 'data'},
           logout: false
         }
       }

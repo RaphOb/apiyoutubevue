@@ -1,4 +1,3 @@
-/* eslint-disable */
 <template>
     <div>
         <div v-for="user in users.data" :key="user.id">
@@ -8,12 +7,12 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from '~/plugins/axios'
   import Card from '~/components/Card.vue'
 
   export default {
-    asyncData ({ params }) {
-        return axios.get(`users`)
+    asyncData () {
+        return axios.get('/users')
             .then((res) => {
                 console.log(res.data.data);
                 return {users: res.data}
