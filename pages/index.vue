@@ -1,14 +1,12 @@
 <template>
   <div>
-    <!--<nuxt-link to="/users">-->
      <div>
        <div class="video">
          <div v-for="video in videos.data" :key="video.id">
-           <Card :isUser="false" :id="video.id" :name="video.name" :created_at="video.created_at"></Card>
+           <Card :cardType="'Video'" :id="video.id" :name="video.name" :created_at="video.created_at"></Card>
          </div>
        </div>
      </div>
-    <!--</nuxt-link>-->
   </div>
 </template>
 

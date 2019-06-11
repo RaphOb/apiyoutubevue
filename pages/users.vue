@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="user in users.data" :key="user.id">
-            <Card :isUser="true" :id="user.id" :username="user.username" :pseudo="user.pseudo" :created_at="user.created_at"></Card>
+            <Card :cardType="'User'" :id="user.id" :username="user.username" :pseudo="user.pseudo" :created_at="user.created_at"></Card>
         </div>
     </div>
 </template>
@@ -21,11 +21,7 @@
     components: {
         Card
     },
-    state: {
-        users: {
-            data: []
-        }
-    }
+
   };
 </script>
 

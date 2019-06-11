@@ -1,23 +1,56 @@
 <template>
     <div>
-        <md-card>
+      <div v-if="cardType === 'Video'">
+        <nuxt-link :to="`/video/${id}`">
+          <md-card>
             <md-card-header>
-                <div class="md-title" v-if="isUser">{{id}} : {{username}}</div>
-                <div class="md-title" v-if="!isUser">{{id}} : {{name}}</div>
+              <div class="md-title"><b>Title :</b> {{name}}</div>
             </md-card-header>
 
-            <md-card-content v-if="isUser">
-                {{pseudo}} , {{created_at}}
-            </md-card-content>
-            <md-card-content v-if="!isUser">
-                {{created_at}}
+            <md-card-content>
+              Created at : {{created_at}}
             </md-card-content>
 
             <md-card-actions>
-                <md-button>Action</md-button>
-                <md-button>Action</md-button>
+              <md-button>Delete</md-button>
+              <md-button>Update</md-button>
             </md-card-actions>
+          </md-card>
+        </nuxt-link>
+      </div>
+      <div v-else-if="cardType === 'User'">
+        <md-card>
+          <md-card-header>
+            <div class="md-title"><b>Username :</b> {{username}}</div>
+          </md-card-header>
+
+          <md-card-content>
+            <p>Pseudo : {{pseudo}}</p>
+            <p v-if="email">Mail: {{email}}</p>
+            <p>Created at : {{created_at}}</p>
+          </md-card-content>
+
+          <md-card-actions>
+            <md-button>Delete</md-button>
+            <md-button>Update</md-button>
+          </md-card-actions>
         </md-card>
+      </div>
+      <div v-else>
+          <md-card>
+            <md-card-header>
+              <div class="md-title">Comment by <b>{{pseudo}}</b></div>
+            </md-card-header>
+
+            <md-card-content>
+              {{body}}
+            </md-card-content>
+
+            <md-card-actions>
+              <md-button>Delete</md-button>
+            </md-card-actions>
+          </md-card>
+      </div>
     </div>
 </template>
 
@@ -29,11 +62,13 @@
             username : String,
             pseudo : String,
             created_at : String,
-            isUser: {
-                type: Boolean,
+            email : String,
+            cardType: {
+                type: String,
                 required: true,
             },
-            name : String
+            name : String,
+            body : String
         }
     }
 </script>
