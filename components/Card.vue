@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div style="padding: 10px">
       <div v-if="cardType === 'Video'">
-        <nuxt-link :to="`/video/${id}`">
+        <nuxt-link class="link" :to="`/video/${id}`">
           <md-card>
             <md-card-header>
               <div class="md-title"><b>Title :</b> {{name}}</div>
@@ -30,10 +30,6 @@
             <p>Created at : {{created_at}}</p>
           </md-card-content>
 
-          <md-card-actions>
-            <md-button>Delete</md-button>
-            <md-button>Update</md-button>
-          </md-card-actions>
         </md-card>
       </div>
       <div v-else>
@@ -74,5 +70,8 @@
 </script>
 
 <style scoped>
+  .link:hover {
+    text-decoration: none;
+  }
 
 </style>
