@@ -1,13 +1,16 @@
 <template>
-  <div>
-     <div>
-       <div class="video">
-         <div v-for="video in videos.data" :key="video.id">
-           <Card :cardType="'Video'" :id="video.id" :name="video.name" :created_at="video.created_at"></Card>
-         </div>
-       </div>
-     </div>
-  </div>
+ <div class="main">
+   <div v-for="video in videos.data" :key="video.id">
+     <Card
+       :cardType="'Video'"
+       :id="video.id"
+       :name="video.name"
+       :created_at="video.created_at"
+       :user_id="video.user.id"
+       :view="video.view">
+     </Card>
+   </div>
+ </div>
 </template>
 
 <script>

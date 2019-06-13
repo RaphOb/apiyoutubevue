@@ -1,7 +1,12 @@
 <template>
     <div style="padding: 10px">
       <div v-if="cardType === 'Video'">
-        <nuxt-link class="link" :to="`/video/${id}`">
+        <nuxt-link class="link" :to="{ path:`/video/${id}`, query: {
+          name:       `${name}`,
+          user_id:    `${user_id}`,
+          created_at: `${created_at}`,
+          view:       `${view}`
+        }}">
           <md-card>
             <md-card-header>
               <div class="md-title"><b>Title :</b> {{name}}</div>
@@ -64,7 +69,9 @@
                 required: true,
             },
             name : String,
-            body : String
+            view : String,
+            user_id : String,
+            body : String,
         }
     }
 </script>

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Notification :message="error" :data="data" v-if="error"/>
+    <transition name="fade">
+      <Notification :message="error" :data="data" v-if="error"/>
+    </transition>
     <form method="post" class="md-layout md-alignment-center-center" style="margin-top: 20px" @submit.prevent="login">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
@@ -69,6 +71,9 @@
         } catch (e) {
           this.error = e.response.data.message;
           this.data = e.response.data.data;
+          window.setTimeout(() => {
+            this.error = null;
+          }, 3000)
         }
       }
     }
