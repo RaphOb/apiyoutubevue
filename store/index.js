@@ -1,4 +1,3 @@
-
 export const state = () => ({
   counter: 0,
   token: '',
@@ -40,5 +39,3 @@ export const getters = {
     return state.id
   }
 };
-
-

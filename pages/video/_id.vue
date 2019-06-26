@@ -107,29 +107,38 @@
               name: this.$route.query.name,
               user_id: this.$route.query.user_id,
               created_at: this.$route.query.created_at,
-              view: this.$route.query.view
+              view: this.$route.query.view,
+              source: this.$route.query.source
             },
             // videojs options
             playerOptions: {
               height: '360',
-              autoplay: true,
+              autoplay: false,
               muted: true,
               language: 'en',
               playbackRates: [0.7, 1.0, 1.5, 2.0],
-              sources: [{
-                type: "video/mp4",
-                // mp4
-                src: "http://vjs.zencdn.net/v/oceans.mp4",
-                // webm
-                // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
-              }],
+              sources: [
+                {
+                  type: "video/mp4",
+                  // mp4
+                  src: `http://192.168.56.103:8080/videos/${this.$route.query.source}`,
+                  // webm
+                  // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
+                  res : 1
+                },
+                {
+                  type: "video/mp4",
+                  src: `http://192.168.56.103/videos/${this.$route.query.source}`,
+                  res : 2
+                }
+              ],
               poster: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg",
             }
           }
         },
 
-       asyncData({route}) {
-          const pathToComments = "/video/" + route.params.id + "/comments";
+        asyncData({route}) {
+          const pathToComments = "/video/" + route.params.id + "/comments?perPage=10";
 
           try {
               return axios.get(pathToComments)
@@ -147,23 +156,20 @@
             const path = "/video/" + this.$route.params.id + "/comment";
             try {
               // TODO retrieve token from store
-              // this.$axios.setHeader('Token', )
+              const token = this.$auth.getToken('local').substring(7);
               await this.$axios.post(path, {
                 body: this.comment
-              })
-
+              }, {
+                headers: {
+                  Token: token
+                }
+              });
             } catch (e) {
               this.error = e.response.data.message;
               this.data = e.response.data.data;
             }
           }
         },
-
-      state: {
-        comments: {
-          data: []
-        }
-      }
     }
 </script>
 

@@ -98,7 +98,6 @@
                         email: this.email,
                         password: this.password
                     });
-
                     const {data} = await this.$axios.post('/auth', {
                       login: this.username,
                       password: this.password

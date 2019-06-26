@@ -25,7 +25,7 @@
       }
     },
     asyncData({params}) {
-      axios.get(`http://192.168.197.134:8084/${params}`)
+      axios.get(`http://192.168.56.103:8084/${params}`)
         .then((res) => {
           console.log(res.data.id)
           return res.data
