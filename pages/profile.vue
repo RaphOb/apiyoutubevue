@@ -160,7 +160,12 @@
           // Instead of this timeout, here you can call your API
           const path = '/user/' + id;
           try {
-            await this.$axios.put(path);
+            await this.$axios.put(path, {
+              username: this.form.username,
+              password: this.form.password,
+              pseudo:   this.form.pseudo,
+              email:    this.form.email
+            });
             this.lastUser = `${this.form.username} ${this.form.pseudo}`;
             this.userSaved = true;
             this.clearForm();
@@ -193,11 +198,4 @@
     left: 0;
   }
 
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity 0.55s ease-out;
-  }
-
-  .fade-enter, .fade-leave-to {
-    opacity: 0;
-  }
 </style>

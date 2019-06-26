@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Notification :message="error" :data="data" v-if="error"/>
+    <transition name="fade">
+      <Notification :message="error" :data="data" v-if="error"/>
+    </transition>
     <form method="post" class="md-layout md-alignment-center-center" style="margin-top: 20px" @submit.prevent="login">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
@@ -59,16 +61,32 @@
       async login() {
         // TODO locale storage le token recu et se co avec autha
         try {
-          await this.$auth.loginWith('local', {
-            data: {
+          const {data} = await this.$axios.post('/auth', {
               login: this.username,
               password: this.password
-            }
           });
+          const token = data.data.token;
+          try {
+            this.$auth.setToken('local', "Bearer " + token);
+            setTimeout(async () => {
+              this.$auth.setStrategy('local');
+              setTimeout(async () => {
+                await this.$auth.fetchUser();
+              })
+            });
+            this.$store.commit('setIdUser', data.data.user.id);
+            this.$store.commit('setToken', token);
+
+          } catch (e) {
+            console.log(e);
+          }
           this.$router.push('/')
         } catch (e) {
           this.error = e.response.data.message;
           this.data = e.response.data.data;
+          window.setTimeout(() => {
+            this.error = null;
+          }, 3000)
         }
       }
     }

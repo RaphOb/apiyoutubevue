@@ -1,12 +1,31 @@
 <template>
-  <div>
-<!--    <div v-for="user in data.data" :key="user.id">-->
-<!--      <Card :isUser="true" :id="user.id" :username="user.username" :pseudo="user.pseudo" :created_at="user.created_at"></Card>-->
-<!--    </div>-->
-    <div style="text-align: center; padding: 30px;">
-      <h1>La vidéo</h1>
-    </div>
-    <Notification :message="error" :data="data" v-if="error"/>
+  <div class="main">
+    <md-card style="margin: 10px">
+      <md-card-header>
+        <div class="md-title">
+          <span>{{ video.name }}</span>
+        </div>
+      </md-card-header>
+      <md-card-media>
+        <div class="item">
+          <div class="player">
+            <video-player class="vjs-custom-skin" ref="videoPlayer"
+                          :options="playerOptions" :playsinline="true"></video-player>
+          </div>
+        </div>
+      </md-card-media>
+      <md-card-content>
+        <div class="md-layout">
+          <div class="md-layout-item">
+            <span>{{video.view}} view(s)</span>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+
+    <transition name="fade">
+      <Notification :message="error" :data="data" v-if="error"/>
+    </transition>
     <form novalidate class="md-layout md-alignment-center-center" style="padding: 10px;" @submit.prevent="createComment">
       <md-card class="md-layout-item">
         <md-card-header>
@@ -39,32 +58,81 @@
   import Card from '~/components/Card'
   import { mapGetters } from 'vuex'
   import Notification from '~/components/Notification'
+  import '~/assets/video-js.css'
+  import { videoPlayer } from 'vue-video-player'
+  import 'video.js/dist/video-js.css'
 
   export default {
         name: "_id.vue",
 
         components: {
           Card,
-          Notification
+          Notification,
+          videoPlayer
         },
 
         computed: {
-          ...mapGetters(['isAuthenticated', 'loggedInUser'])
+          ...mapGetters(['isAuthenticated', 'loggedInUser']),
+          player() {
+            return this.$refs.videoPlayer.player
+          }
+        },
+
+        mounted() {
+          // console.log('this is current player instance object', this.player)
+          setTimeout(() => {
+            console.log('dynamic change options', this.player)
+            // change src
+            // this.playerOptions.sources[0].src = 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm';
+            // change item
+            // this.$set(this.playerOptions.sources, 0, {
+            //   type: "video/mp4",
+            //   src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
+            // })
+            // change array
+            // this.playerOptions.sources = [{
+            //   type: "video/mp4",
+            //   src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
+            // }]
+            // this.player.muted(false)
+          }, 5000)
         },
 
         data() {
           return {
             comment: '',
             error: null,
-            data: null
+            data: null,
+            video: {
+              name: this.$route.query.name,
+              user_id: this.$route.query.user_id,
+              created_at: this.$route.query.created_at,
+              view: this.$route.query.view
+            },
+            // videojs options
+            playerOptions: {
+              height: '360',
+              autoplay: true,
+              muted: true,
+              language: 'en',
+              playbackRates: [0.7, 1.0, 1.5, 2.0],
+              sources: [{
+                type: "video/mp4",
+                // mp4
+                src: "http://vjs.zencdn.net/v/oceans.mp4",
+                // webm
+                // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
+              }],
+              poster: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg",
+            }
           }
         },
 
        asyncData({route}) {
-          const path = "/video/" + route.params.id + "/comments";
-          console.log(path);
+          const pathToComments = "/video/" + route.params.id + "/comments";
+
           try {
-              return axios.get(path)
+              return axios.get(pathToComments)
                 .then((res) => {
                   console.log(res.data.data);
                   return { comments: res.data }
@@ -85,7 +153,6 @@
               })
 
             } catch (e) {
-              console.log('yes');
               this.error = e.response.data.message;
               this.data = e.response.data.data;
             }

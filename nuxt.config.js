@@ -3,7 +3,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'youtubevue',
+    title: 'My Youtube',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -32,23 +32,27 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/auth', method: 'post', propertyName: 'data' },
-          user: { url: '/videos', method: 'get', propertyName: 'data'},
+          login: { url: '/auth', method: 'post', propertyName: 'token' },
+          user: { url: '/user/62', method: 'get', propertyName: 'data'},
           logout: false
-        }
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer'
       }
+    },
+    redirect: {
+      login: '/',
+      logout: '/',
     }
   },
-  redirect: {
-    login: '/',
-    logout: '/',
-  },
+
   css: [
     { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
     { src: '~/assets/theme.scss', lang: 'scss' } // include vue-material theme engine
   ],
   plugins: [
-    { src: '~/plugins/vue-material' }
+    { src: '~/plugins/vue-material' },
+    // { src: '~/plugins/localStorage.js', ssr: false}
   ],
 
   /*

@@ -14,7 +14,7 @@
       }
   }
 </script>
-<style>
+<style lang="scss">
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
@@ -59,5 +59,19 @@ html {
   color: #fff;
   background-color: #35495e;
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.55s ease-out;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.main {
+  width: 70%;
+  margin: auto;
+}
+
 </style>
 
