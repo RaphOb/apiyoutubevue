@@ -5,7 +5,8 @@
           name:       `${name}`,
           user_id:    `${user_id}`,
           created_at: `${created_at}`,
-          view:       `${view}`
+          view:       `${view}`,
+          source:     `${source}`
         }}">
           <md-card>
             <md-card-header>
@@ -16,9 +17,6 @@
               Created at : {{created_at}}
             </md-card-content>
 
-            <md-card-actions>
-              <md-button v-on:click="encodeVideo">Upload</md-button>
-            </md-card-actions>
           </md-card>
         </nuxt-link>
       </div>
@@ -69,15 +67,10 @@
             },
             name : String,
             view : String,
+            source : String,
             user_id : String,
             body : String,
         },
-
-        methods: {
-          encodeVideo() {
-
-          }
-        }
     }
 </script>
 

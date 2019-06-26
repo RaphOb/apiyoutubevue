@@ -2,11 +2,11 @@ import Vuex from 'vuex'
 
 export default new Vuex.Store({
   state: () => {
-    return { counter: 0 }
+    return {   video: []}
   },
   mutations: {
-    increment(state) {
-      state.counter++
+    add (state, payload) {
+      state.video = payload;
     }
   }
 })

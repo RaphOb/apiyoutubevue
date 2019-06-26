@@ -44,7 +44,7 @@
             </md-card-actions>
           </md-card>
         </form>
-        <md-snackbar :md-active.sync="videoSaved">The user {{ lastVideo }} was saved with success!</md-snackbar>
+        <md-snackbar :md-active.sync="videoSaved">The video {{ lastVideo }} was saved with success!</md-snackbar>
       </div>
 
       <div v-for="video in videos.data" :key="video.id">
@@ -155,7 +155,7 @@
           formData.append("source", this.file);
           formData.append("name", this.videoForm.videoTitle);
 
-          const user_id = this.$store.getters.getIdUser();
+          const user_id = this.$store.getters.getIdUser;
           const token = this.$auth.getToken('local').substring(7);
           const path = '/user/' + user_id + '/video';
           try {

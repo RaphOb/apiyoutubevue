@@ -1,12 +1,16 @@
 export const state = () => ({
   counter: 0,
   token: '',
-  id: 0
+  id: 0,
+  video: []
 });
 
 export const mutations = {
   increment(state) {
     state.counter++
+  },
+  add (state, payload) {
+    state.video = payload;
   },
 
   setToken(state, token) {

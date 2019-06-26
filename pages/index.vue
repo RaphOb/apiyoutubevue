@@ -9,7 +9,8 @@
        :name="video.name"
        :created_at="video.created_at"
        :user_id="video.user.id"
-       :view="video.view">
+       :view="video.view"
+       :source="video.source">
      </Card>
    </div>
  </div>
@@ -24,7 +25,7 @@
       asyncData () {
         return axios.get(`/videos`)
           .then((res) => {
-            // console.log(res.data);
+            console.log("allo", res.data);
             return { videos: res.data }
           })
       },
@@ -35,10 +36,5 @@
         Card,
         Search
       },
-      mounted() {
-        console.log("allo");
-        console.log(this.$store.getters.getToken);
-      }
-
     }
 </script>
