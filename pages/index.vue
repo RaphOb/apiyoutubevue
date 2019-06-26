@@ -1,5 +1,7 @@
 <template>
  <div class="main">
+
+   <Search></Search>
    <div v-for="video in videos.data" :key="video.id">
      <Card
        :cardType="'Video'"
@@ -16,20 +18,27 @@
 <script>
   import axios from '~/plugins/axios'
   import Card from '~/components/Card.vue'
+  import Search from '~/components/Search.vue'
 
     export default {
       asyncData () {
         return axios.get(`/videos`)
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             return { videos: res.data }
           })
       },
-        head: {
-            title: 'Home page'
-        },
-        components: {
-          Card
-        }
+      head: {
+          title: 'Home page'
+      },
+      components: {
+        Card,
+        Search
+      },
+      mounted() {
+        console.log("allo");
+        console.log(this.$store.getters.getToken);
+      }
+
     }
 </script>

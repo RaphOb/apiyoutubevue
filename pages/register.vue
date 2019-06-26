@@ -99,12 +99,22 @@
                         password: this.password
                     });
 
-                    await this.$auth.loginWith('local', {
-                        data: {
-                            username: this.username,
-                            password: this.password
-                        },
+                    const {data} = await this.$axios.post('/auth', {
+                      login: this.username,
+                      password: this.password
                     });
+                    const token = data.data.token;
+                    try {
+                      this.$auth.setToken('local', "Bearer " + token);
+                      setTimeout(async () => {
+                        this.$auth.setStrategy('local');
+                        setTimeout(async () => {
+                          await this.$auth.fetchUser();
+                        })
+                      });
+                    } catch (e) {
+                      console.log(e);
+                    }
                     this.$router.push('/');
                 } catch (e) {
                     this.error = e.response.data.message;

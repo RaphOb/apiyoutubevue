@@ -17,8 +17,7 @@
             </md-card-content>
 
             <md-card-actions>
-              <md-button>Delete</md-button>
-              <md-button>Update</md-button>
+              <md-button v-on:click="encodeVideo">Upload</md-button>
             </md-card-actions>
           </md-card>
         </nuxt-link>
@@ -72,6 +71,12 @@
             view : String,
             user_id : String,
             body : String,
+        },
+
+        methods: {
+          encodeVideo() {
+
+          }
         }
     }
 </script>
