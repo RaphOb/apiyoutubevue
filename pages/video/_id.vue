@@ -121,14 +121,14 @@
                 {
                   type: "video/mp4",
                   // mp4
-                  src: `http://192.168.56.103:8080/videos/${this.$route.query.source}`,
+                  src: `localhost/ETNA/API/public/videos/${this.$route.query.source}`,
                   // webm
                   // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
                   res : 1
                 },
                 {
                   type: "video/mp4",
-                  src: `http://192.168.56.103/videos/${this.$route.query.source}`,
+                  src: `localhost/ETNA/API/public/videos/${this.$route.query.source}`,
                   res : 2
                 }
               ],

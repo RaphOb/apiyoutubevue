@@ -5,7 +5,7 @@
       <md-button class="md-primary" v-if="!isAuthenticated"><a href="/login"> Login</a> </md-button>
       <md-button class="md-primary" v-if="!isAuthenticated"><nuxt-link to="/register"> Registration</nuxt-link> </md-button>
       <md-button class="md-primary" v-if="isAuthenticated"><nuxt-link to="/myvideos">My Video(s)</nuxt-link></md-button>
-      <md-button class="md-primary" v-if="isAuthenticated"><nuxt-link to="/profile"> My Profile</nuxt-link> </md-button>
+      <md-button class="md-primary" v-if="isAuthenticated"><nuxt-link to="/profile"> My Profile ({{loggedInUser.pseudo}})</nuxt-link> </md-button>
       <md-button class="md-primary" v-if="isAuthenticated"><a @click="logout"> Logout</a> </md-button>
     </md-toolbar>
 </template>
@@ -20,6 +20,8 @@
     },
     methods: {
       async logout() {
+        localStorage.setItem('user', null);
+        this.$auth.setUser(localStorage.getItem('user'));
         await this.$auth.logout();
       },
     },

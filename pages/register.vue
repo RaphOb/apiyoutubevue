@@ -107,9 +107,9 @@
                       this.$auth.setToken('local', "Bearer " + token);
                       setTimeout(async () => {
                         this.$auth.setStrategy('local');
-                        setTimeout(async () => {
+                        /*setTimeout(async () => {
                           await this.$auth.fetchUser();
-                        })
+                        })*/
                       });
                     } catch (e) {
                       console.log(e);

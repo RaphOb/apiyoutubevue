@@ -25,7 +25,7 @@ module.exports = {
 
   axios: {
     // proxyHeaders: false
-    baseURL: 'http://192.168.56.103:8080/api'
+    baseURL: 'http://localhost/ETNA/API/public/api'
   },
 
   auth: {
@@ -33,7 +33,7 @@ module.exports = {
       local: {
         endpoints: {
           login: { url: '/auth', method: 'post', propertyName: 'token' },
-          user: { url: '/user/62', method: 'get', propertyName: 'data'},
+          user: false,
           logout: false
         },
         tokenRequired: true,

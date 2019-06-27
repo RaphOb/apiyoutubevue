@@ -22,7 +22,7 @@
   import Search from '~/components/Search.vue'
 
     export default {
-      asyncData () {
+      asyncData ({store}) {
         return axios.get(`/videos`)
           .then((res) => {
             console.log("allo", res.data);
@@ -36,5 +36,8 @@
         Card,
         Search
       },
+      mounted() {
+        this.$auth.setUser(JSON.parse(localStorage.getItem('user')));
+      }
     }
 </script>

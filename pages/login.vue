@@ -66,13 +66,16 @@
               password: this.password
           });
           const token = data.data.token;
+          console.log(data.data.user);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
+          this.$auth.setUser(data.data.user);
           try {
             this.$auth.setToken('local', "Bearer " + token);
             setTimeout(async () => {
               this.$auth.setStrategy('local');
-              setTimeout(async () => {
+              /*setTimeout(async () => {
                 await this.$auth.fetchUser();
-              })
+              })*/
             });
             this.$store.commit('setIdUser', data.data.user.id);
             this.$store.commit('setToken', token);
