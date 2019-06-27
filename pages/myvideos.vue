@@ -54,7 +54,8 @@
           :name="video.name"
           :created_at="video.created_at"
           :user_id="video.user_id"
-          :view="video.view">
+          :view="video.view"
+          :source="video.source">
         </Card>
       </div>
     </div>
