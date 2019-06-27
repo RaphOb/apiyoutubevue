@@ -13,7 +13,7 @@
       Search
     },
     asyncData({params}) {
-      return axios.get(`http://192.168.56.103:8084/api/queries?queri=${params.id}`)
+      return axios.get(`http://192.168.197.135:8084/api/queries?queri=${params.id}`)
         .then((response) => {
           return {video: response.data}
         });

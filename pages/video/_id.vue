@@ -93,7 +93,7 @@
           //   for (let i = 0; i < this.videoFormat.length; i++) {
           //     this.$set(this.playerOptions.sources, 0, {
           //       type: "video/mp4",
-          //       src: "http://192.168.56.103:8080/videos/" + this.videoFormat[i].uri,
+          //       src: "http://192.168.197.135:8080/videos/" + this.videoFormat[i].uri,
           //       res: parseInt(this.videoFormat[i].code),
           //       label: this.videoFormat[i].code
           //     })
@@ -132,13 +132,13 @@
               sources: [
                 {
                   type: "video/mp4",
-                  src: `http://192.168.56.103:8080/videos/${this.$route.query.source}`,
+                  src: `http://192.168.197.135:8080/videos/${this.$route.query.source}`,
                   res : 480,
                   label: '480'
                 },
                 {
                   type: "video/mp4",
-                  src: `http://192.168.56.103:8080/videos/${this.$route.query.source}`,
+                  src: `http://192.168.197.135:8080/videos/${this.$route.query.source}`,
                   // webm
                   // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
                   res : 360,
@@ -146,7 +146,7 @@
                 },
                 {
                   type: "video/mp4",
-                  src: `http://192.168.56.103:8080/videos/${this.$route.query.source}`,
+                  src: `http://192.168.197.135:8080/videos/${this.$route.query.source}`,
                   // webm
                   // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
                   res : 720,
