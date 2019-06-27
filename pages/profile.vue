@@ -120,13 +120,6 @@
         Notification
       },
       mixins: [validationMixin],
-      mounted() {
-        console.log(this.$auth.user.username);
-        this.form.username = this.user.username = this.$auth.user.username;
-        this.form.email = this.user.email = this.$auth.user.email;
-        this.user.created_at = this.$auth.user.created_at;
-        this.form.pseudo = this.user.pseudo = this.$auth.user.pseudo;
-      },
       data: () => ({
         form: {
           username: null,
@@ -162,9 +155,13 @@
           }
         }
       },
-
-
-
+      mounted() {
+        console.log(this.$auth.user.username);
+        this.form.username = this.user.username = this.$auth.user.username;
+        this.form.email = this.user.email = this.$auth.user.email;
+        this.user.created_at = this.$auth.user.created_at;
+        this.form.pseudo = this.user.pseudo = this.$auth.user.pseudo;
+      },
       methods: {
         getValidationClass (fieldName) {
           const field = this.$v.form[fieldName];
