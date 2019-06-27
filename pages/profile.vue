@@ -156,7 +156,8 @@
           this.sending = true;
 
           // TODO retrieve id from store
-          const id = 1;
+          const id = this.$store.getters.getIdUser;
+          const token = this.$store.getters.getToken;
           // Instead of this timeout, here you can call your API
           const path = '/user/' + id;
           try {
@@ -165,6 +166,10 @@
               password: this.form.password,
               pseudo:   this.form.pseudo,
               email:    this.form.email
+            }, {
+              headers: {
+                'Token' : token
+              }
             });
             this.lastUser = `${this.form.username} ${this.form.pseudo}`;
             this.userSaved = true;
