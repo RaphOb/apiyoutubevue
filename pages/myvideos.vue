@@ -47,16 +47,18 @@
         <md-snackbar :md-active.sync="videoSaved">The video {{ lastVideo }} was saved with success!</md-snackbar>
       </div>
 
-      <div v-for="video in videos.data" :key="video.id">
-        <Card
-          :cardType="'Video'"
-          :id="video.id"
-          :name="video.name"
-          :created_at="video.created_at"
-          :user_id="video.user_id"
-          :view="video.view"
-          :source="video.source">
-        </Card>
+      <div v-if="videos">
+        <div v-for="video in videos.data" :key="video.id">
+          <Card
+            :cardType="'Video'"
+            :id="video.id"
+            :name="video.name"
+            :created_at="video.created_at"
+            :user_id="video.user_id"
+            :view="video.view"
+            :source="video.source">
+          </Card>
+        </div>
       </div>
     </div>
 </template>
@@ -100,6 +102,7 @@
             videoFile: null,
           },
           sending: false,
+          videos: null,
           videoSaved: false,
           lastVideo: null,
           file: null,
@@ -156,7 +159,7 @@
           formData.append("source", this.file);
           formData.append("name", this.videoForm.videoTitle);
 
-          const user_id = this.$store.getters.getIdUser;
+          const user_id = this.$auth.user.id;
           const token = this.$auth.getToken('local').substring(7);
           const path = '/user/' + user_id + '/video';
           try {
@@ -164,8 +167,10 @@
               headers: {
                 'Content-Type': 'multipart/form-data',
                 Token: token
-              }}
-            );
+              }}.catch(error => {
+                console.log(error.response)
+              }
+            ));
             this.lastVideo = this.videoForm.videoTitle;
             this.videoSaved = true;
             this.clearForm();
@@ -191,13 +196,15 @@
       asyncData({store}) {
           // TODO retrieve id from store
           console.log(store.state.auth.user);
-          const id = 62;
+          const id = store.state.auth.user.id;
           const path = 'user/' + id + '/videos';
         try {
           return axios.get(path)
             .then((res) => {
               console.log(res.data.data);
               return {videos: res.data}
+            }).catch(error => {
+              console.log(error.response);
             })
         } catch (e) {
           this.error = e.response.data.message;
