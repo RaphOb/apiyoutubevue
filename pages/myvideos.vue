@@ -105,7 +105,7 @@
           videos: null,
           videoSaved: false,
           lastVideo: null,
-          file: null,
+          file: {},
           isVideoFile: false,
           data: null,
           error: null
@@ -162,19 +162,23 @@
           const user_id = this.$auth.user.id;
           const token = this.$auth.getToken('local').substring(7);
           const path = '/user/' + user_id + '/video';
+          console.log(path);
+          console.log(token);
           try {
             await this.$axios.post(path, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
                 Token: token
-              }}.catch(error => {
-                console.log(error.response)
               }
-            ));
+            }).catch(error => {
+                console.log(error.response);
+            });
+
             this.lastVideo = this.videoForm.videoTitle;
             this.videoSaved = true;
             this.clearForm();
           } catch (e) {
+            console.log(e);
             this.error = e.response.data.message;
             this.data = e.response.data.data;
             window.setTimeout(() => {
