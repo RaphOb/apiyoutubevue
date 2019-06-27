@@ -15,13 +15,15 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <p>
-                  <strong>Username:</strong>
+                  <strong>Username: </strong>
                 </p>
+                <p> {{ this.user.username }}</p>
               </md-field>
               <md-field>
                 <p>
-                  <strong>Password:</strong>
+                  <strong>Email:</strong>
                 </p>
+                {{ this.user.email }}
               </md-field>
             </div>
           </div>
@@ -112,6 +114,11 @@
           password: null,
           email: null,
         },
+        user: {
+          username: '',
+          email: '',
+          pseudo: ''
+        },
         userSaved: false,
         sending: false,
         lastUser: null,
@@ -135,6 +142,13 @@
           }
         }
       },
+
+      mounted() {
+        console.log(this.$auth.user.username);
+        this.user.username = this.$auth.user.username;
+        this.user.email = this.$auth.user.email;
+      },
+
       methods: {
         getValidationClass (fieldName) {
           const field = this.$v.form[fieldName];
