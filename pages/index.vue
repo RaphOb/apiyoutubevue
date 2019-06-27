@@ -36,5 +36,8 @@
         Card,
         Search
       },
+      mounted() {
+        this.$auth.setUser(JSON.parse(localStorage.getItem('user')));
+      }
     }
 </script>

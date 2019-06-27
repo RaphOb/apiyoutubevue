@@ -33,7 +33,7 @@ module.exports = {
       local: {
         endpoints: {
           login: { url: '/auth', method: 'post', propertyName: 'token' },
-          user: { url: '/user/62', method: 'get', propertyName: 'data'},
+          user: false,
           logout: false
         },
         tokenRequired: true,
