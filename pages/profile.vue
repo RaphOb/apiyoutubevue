@@ -21,9 +21,21 @@
               </md-field>
               <md-field>
                 <p>
-                  <strong>Email:</strong>
+                  <strong>Pseudo: </strong>
                 </p>
-                {{ this.user.email }}
+                <p> {{ this.user.pseudo }}</p>
+              </md-field>
+              <md-field>
+                <p>
+                  <strong>Email: </strong>
+                </p>
+                <p> {{ this.user.email }}</p>
+              </md-field>
+              <md-field>
+                <p>
+                  <strong>Date de creation: </strong>
+                </p>
+                <p> {{ this.user.created_at }}</p>
               </md-field>
             </div>
           </div>
@@ -99,6 +111,7 @@
       maxLength
     } from 'vuelidate/lib/validators'
     import Notification from '~/components/Notification'
+    import {AxiosInstance as axios} from "axios";
 
 
     export default {
@@ -107,6 +120,13 @@
         Notification
       },
       mixins: [validationMixin],
+      mounted() {
+        console.log(this.$auth.user.username);
+        this.form.username = this.user.username = this.$auth.user.username;
+        this.form.email = this.user.email = this.$auth.user.email;
+        this.user.created_at = this.$auth.user.created_at;
+        this.form.pseudo = this.user.pseudo = this.$auth.user.pseudo;
+      },
       data: () => ({
         form: {
           username: null,
@@ -143,11 +163,7 @@
         }
       },
 
-      mounted() {
-        console.log(this.$auth.user.username);
-        this.user.username = this.$auth.user.username;
-        this.user.email = this.$auth.user.email;
-      },
+
 
       methods: {
         getValidationClass (fieldName) {
