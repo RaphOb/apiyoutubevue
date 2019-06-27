@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default function({query}) {
-  return axios.get(`http://192.168.56.103:8084/${query}`)
+  return axios.get(`localhost/ETNA/API/public/${query}`)
     .then((response) => {
       store.commit('add', response.data.results);
     });
