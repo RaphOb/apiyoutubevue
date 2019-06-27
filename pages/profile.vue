@@ -21,9 +21,21 @@
               </md-field>
               <md-field>
                 <p>
-                  <strong>Email:</strong>
+                  <strong>Pseudo: </strong>
                 </p>
-                {{ this.user.email }}
+                <p> {{ this.user.pseudo }}</p>
+              </md-field>
+              <md-field>
+                <p>
+                  <strong>Email: </strong>
+                </p>
+                <p> {{ this.user.email }}</p>
+              </md-field>
+              <md-field>
+                <p>
+                  <strong>Date de creation: </strong>
+                </p>
+                <p> {{ this.user.created_at }}</p>
               </md-field>
             </div>
           </div>
@@ -92,121 +104,117 @@
 </template>
 
 <script>
-    import { validationMixin } from 'vuelidate'
-    import {
-      email,
-      minLength,
-      maxLength
-    } from 'vuelidate/lib/validators'
-    import Notification from '~/components/Notification'
+  import { validationMixin } from 'vuelidate'
+  import {
+    email,
+    minLength,
+    maxLength
+  } from 'vuelidate/lib/validators'
+  import Notification from '~/components/Notification'
+  import {AxiosInstance as axios} from "axios";
 
 
-    export default {
-      name: 'profile',
-      components: {
-        Notification
+  export default {
+    name: 'profile',
+    components: {
+      Notification
+    },
+    mixins: [validationMixin],
+    data: () => ({
+      form: {
+        username: null,
+        pseudo: null,
+        password: null,
+        email: null,
       },
-      mixins: [validationMixin],
-      data: () => ({
-        form: {
-          username: null,
-          pseudo: null,
-          password: null,
-          email: null,
+      user: {
+        username: '',
+        email: '',
+        pseudo: ''
+      },
+      userSaved: false,
+      sending: false,
+      lastUser: null,
+      data: null,
+      error: null
+    }),
+    validations: {
+      form: {
+        username: {
+          minLength: minLength(3)
         },
-        user: {
-          username: '',
-          email: '',
-          pseudo: ''
+        pseudo: {
+          minLength: minLength(3)
         },
-        userSaved: false,
-        sending: false,
-        lastUser: null,
-        data: null,
-        error: null
-      }),
-      validations: {
-        form: {
-          username: {
-            minLength: minLength(3)
-          },
-          pseudo: {
-            minLength: minLength(3)
-          },
-          password: {
-            minLength: minLength(5),
-            maxLength: maxLength(18),
-          },
-          email: {
-            email
+        password: {
+          minLength: minLength(5),
+          maxLength: maxLength(18),
+        },
+        email: {
+          email
+        }
+      }
+    },
+    mounted() {
+      console.log(this.$auth.user.username);
+      this.form.username = this.user.username = this.$auth.user.username;
+      this.form.email = this.user.email = this.$auth.user.email;
+      this.user.created_at = this.$auth.user.created_at;
+      this.form.pseudo = this.user.pseudo = this.$auth.user.pseudo;
+    },
+    methods: {
+      getValidationClass (fieldName) {
+        const field = this.$v.form[fieldName];
+
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
           }
         }
       },
-
-      mounted() {
-        console.log(this.$auth.user.username);
-        this.user.username = this.$auth.user.username;
-        this.user.email = this.$auth.user.email;
+      clearForm () {
+        this.$v.$reset();
+        this.form.username = null;
+        this.form.pseudo = null;
+        this.form.password = null;
+        this.form.email = null;
       },
+      async saveUser () {
+        this.sending = true;
 
-      methods: {
-        getValidationClass (fieldName) {
-          const field = this.$v.form[fieldName];
+        // TODO retrieve id from store
+        const id = 1;
+        // Instead of this timeout, here you can call your API
+        const path = '/user/' + id;
+        try {
+          await this.$axios.put(path, {
+            username: this.form.username,
+            password: this.form.password,
+            pseudo:   this.form.pseudo,
+            email:    this.form.email
+          });
+          this.lastUser = `${this.form.username} ${this.form.pseudo}`;
+          this.userSaved = true;
+          this.clearForm();
+        } catch (e) {
+          this.error = e.response.data.message;
+          this.data = e.response.data.data;
+          window.setTimeout(() => {
+            this.error = null;
+          }, 3000)
+        }
+        this.sending = false;
 
-          if (field) {
-            return {
-              'md-invalid': field.$invalid && field.$dirty
-            }
-          }
-        },
-        clearForm () {
-          this.$v.$reset();
-          this.form.username = null;
-          this.form.pseudo = null;
-          this.form.password = null;
-          this.form.email = null;
-        },
-        async saveUser () {
-          this.sending = true;
+      },
+      validateUser () {
+        this.$v.$touch();
 
-          // TODO retrieve id from store
-          const id = this.$store.getters.getIdUser;
-          const token = this.$store.getters.getToken;
-          // Instead of this timeout, here you can call your API
-          const path = '/user/' + id;
-          try {
-            await this.$axios.put(path, {
-              username: this.form.username,
-              password: this.form.password,
-              pseudo:   this.form.pseudo,
-              email:    this.form.email
-            }, {
-              headers: {
-                'Token' : token
-              }
-            });
-            this.lastUser = `${this.form.username} ${this.form.pseudo}`;
-            this.userSaved = true;
-            this.clearForm();
-          } catch (e) {
-            this.error = e.response.data.message;
-            this.data = e.response.data.data;
-            window.setTimeout(() => {
-              this.error = null;
-            }, 3000)
-          }
-          this.sending = false;
-
-        },
-        validateUser () {
-          this.$v.$touch();
-
-          if (!this.$v.$invalid) {
-            this.saveUser()
-          }
+        if (!this.$v.$invalid) {
+          this.saveUser()
         }
       }
     }
+  }
 </script>
 
 <style lang="scss" scoped>
